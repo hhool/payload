@@ -2,7 +2,9 @@ import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
+import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { fileURLToPath } from 'url'
+import { Categories } from './collections/Categories'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
@@ -17,7 +19,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Categories, Users, Media],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -28,7 +30,12 @@ export default buildConfig({
       connectionString: process.env.POSTGRES_URL || '',
     },
   }),
-  storage: [
+  plugins: [
+    nestedDocsPlugin({
+      collections: ['categories'],
+      generateLabel: (_, doc) => String(doc.title || doc.code || ''),
+      generateURL: (docs) => docs.reduce((url, doc) => `${url}/${String(doc.slug || '')}`, ''),
+    }),
     vercelBlobStorage({
       collections: {
         media: true,
