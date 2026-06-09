@@ -5,6 +5,7 @@ packages:
   - 'templates/blank'
   - 'templates/website'
   - 'templates/ecommerce'
+  - 'templates/with-vercel-postgres'
 
 updateNotifier: false
 symlink: true
