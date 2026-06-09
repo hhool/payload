@@ -13,7 +13,6 @@
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation pnpm exec payload generate:types",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation pnpm exec payload",
-    "prebuild": "pnpm run generate:importmap",
     "predev": "pnpm run generate:importmap",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "pnpm run test:int && pnpm run test:e2e",
